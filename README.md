@@ -100,9 +100,3 @@ Interested in contributing to GPT Newspaper? We welcome contributions of all kin
 ## 🛡️ Disclaimer
 
 GPT Newspaper is an experimental project and provided "as-is" without any warranty. It's intended for personal use and not as a replacement for professional news outlets.
-
-## 📩 Contact Us
-
-For support or inquiries, please open an issue on this repository.
-
-Join us in redefining the future of news consumption with GPT Newspaper!
