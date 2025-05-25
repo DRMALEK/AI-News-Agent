@@ -94,7 +94,7 @@ https://github.com/assafelovic/gpt-newspaper/assets/91344214/7f265369-1293-4d95-
 
 ## 🤝 Contributing
 
-Interested in contributing to GPT Newspaper? We welcome contributions of all kinds! Check out our [Contributor's Guide](CONTRIBUTING.md) to get started.
+Interested in contributing to GPT Newspaper? We welcome contributions of all kinds!
 
 
 ## 🛡️ Disclaimer
