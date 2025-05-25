@@ -1,12 +1,8 @@
 import os
 from datetime import datetime
 from langchain.adapters.openai import convert_openai_messages
-from langchain_openai import ChatOpenAI
+from .utils.chatbot import get_chatbot
 import json5 as json
-
-# Validate OpenAI API key is available
-if not os.getenv("OPENAI_API_KEY"):
-    raise ValueError("OPENAI_API_KEY environment variable is not set. Please check your .env file.")
 
 sample_json = """
 {
@@ -42,7 +38,6 @@ class WriterAgent:
         pass
 
     def writer(self, query: str, sources: list):
-
         prompt = [{
             "role": "system",
             "content": "You are a newspaper writer. Your sole purpose is to write a well-written article about a "
@@ -63,8 +58,8 @@ class WriterAgent:
         optional_params = {
             "response_format": {"type": "json_object"}
         }
-
-        response = ChatOpenAI(model='gpt-4-0125-preview', max_retries=1, model_kwargs=optional_params).invoke(lc_messages).content
+        chatbot = get_chatbot(model='gpt-4.1-mini', model_kwargs=optional_params)
+        response = chatbot.invoke(lc_messages).content
         return json.loads(response)
 
     def revise(self, article: dict):
@@ -87,9 +82,10 @@ class WriterAgent:
         optional_params = {
             "response_format": {"type": "json_object"}
         }
+        
+        chatbot = get_chatbot(model='gpt-4.1-mini')
+        response = json.loads(chatbot.invoke(lc_messages).content)
 
-        response = ChatOpenAI(model='gpt-4-0125-preview', max_retries=1, model_kwargs=optional_params).invoke(lc_messages).content
-        response = json.loads(response)
         print(f"For article: {article['title']}")
         print(f"Writer Revision Message: {response['message']}\n")
         return response

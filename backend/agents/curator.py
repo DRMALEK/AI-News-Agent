@@ -1,7 +1,7 @@
 import os
 from datetime import datetime
 from langchain.adapters.openai import convert_openai_messages
-from langchain_openai import ChatOpenAI
+from .utils.chatbot import get_chatbot
 
 # Validate OpenAI API key is available
 if not os.getenv("OPENAI_API_KEY"):
@@ -35,7 +35,8 @@ class CuratorAgent:
         }]
 
         lc_messages = convert_openai_messages(prompt)
-        response = ChatOpenAI(model='gpt-4-0125-preview', max_retries=1).invoke(lc_messages).content
+        chatbot = get_chatbot(model='gpt-4.1-mini')
+        response = chatbot.invoke(lc_messages).content
         chosen_sources = response
         for i in sources:
             if i["url"] not in chosen_sources:
