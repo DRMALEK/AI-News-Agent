@@ -17,7 +17,7 @@ class MasterAgent:
         search_agent = SearchAgent()
         curator_agent = CuratorAgent()
         writer_agent = WriterAgent()
-        critique_agent = CritiqueAgent()
+        #critique_agent = CritiqueAgent()
         designer_agent = DesignerAgent(self.output_dir)
         editor_agent = EditorAgent(layout)
         publisher_agent = PublisherAgent(self.output_dir)
@@ -29,16 +29,17 @@ class MasterAgent:
         workflow.add_node("search", search_agent.run)
         workflow.add_node("curate", curator_agent.run)
         workflow.add_node("write", writer_agent.run)
-        workflow.add_node("critique", critique_agent.run)
+        #workflow.add_node("critique", critique_agent.run)
         workflow.add_node("design", designer_agent.run)
 
         # Set up edges
         workflow.add_edge('search', 'curate')
         workflow.add_edge('curate', 'write')
-        workflow.add_edge('write', 'critique')
-        workflow.add_conditional_edges(source='critique',
-                                       path=lambda x: "accept" if x['critique'] is None else "revise",
-                                       path_map={"accept": "design", "revise": "write"})
+        workflow.add_edge('write', 'design')
+        #workflow.add_edge('write', 'critique')
+        # workflow.add_conditional_edges(source='critique',
+        #                                path=lambda x: "accept" if x['critique'] is None else "revise",
+        #                                path_map={"accept": "design", "revise": "write"})
 
         # set up start and end nodes
         workflow.set_entry_point("search")

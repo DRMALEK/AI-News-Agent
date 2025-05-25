@@ -67,6 +67,7 @@ https://github.com/assafelovic/gpt-newspaper/assets/91344214/7f265369-1293-4d95-
    ```sh
    TAVILY_API_KEY=your_actual_tavily_api_key
    OPENAI_API_KEY=your_actual_openai_api_key
+   MODEL_NAME=gpt-4-1106-preview  # Optional: Change the model to use
    ```
    
    Alternatively, you can export them as environment variables:
