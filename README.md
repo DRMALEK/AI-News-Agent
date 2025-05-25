@@ -1,4 +1,6 @@
-# GPT Newspaper
+# GPT Newspaper (Forked Version - Bugs Fixed)
+
+**Note**: This is a forked version of the original GPT Newspaper project with various bugs resolved and improvements made for better stability and functionality.
 
 Welcome to the GPT Newspaper project, an innovative autonomous agent designed to create personalized newspapers tailored to user preferences. GPT Newspaper revolutionizes the way we consume news by leveraging the power of AI to curate, write, design, and edit content based on individual tastes and interests.
 
@@ -52,9 +54,22 @@ https://github.com/assafelovic/gpt-newspaper/assets/91344214/7f265369-1293-4d95-
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/rotemweiss57/gpt-newspaper.git
+   git clone https://github.com/your-username/gpt-newspaper.git
     ```
-2. Export your API Keys
+2. Set up your API Keys
+   
+   Copy the `.env.dist` file to `.env` and add your API keys:
+   ```sh
+   cp .env.dist .env
+   ```
+   
+   Then edit the `.env` file and replace the placeholder values with your actual API keys:
+   ```sh
+   TAVILY_API_KEY=your_actual_tavily_api_key
+   OPENAI_API_KEY=your_actual_openai_api_key
+   ```
+   
+   Alternatively, you can export them as environment variables:
    ```sh
     export TAVILY_API_KEY=<YOUR_TAVILY_API_KEY>
     export OPENAI_API_KEY=<YOUR_OPENAI_API_KEY>
@@ -63,11 +78,15 @@ https://github.com/assafelovic/gpt-newspaper/assets/91344214/7f265369-1293-4d95-
    ```sh
    pip install -r requirements.txt
    ```
-4. Run the app
+4. Validate your environment setup (optional but recommended)
+   ```sh
+   python validate_env.py
+   ```
+5. Run the app
    ```sh
     python app.py
     ```
-5. Open the app in your browser
+6. Open the app in your browser
    ```sh
     http://localhost:5000/
     ```
@@ -84,8 +103,6 @@ GPT Newspaper is an experimental project and provided "as-is" without any warran
 
 ## 📩 Contact Us
 
-For support or inquiries, please reach out to us:
-
-- [Email](mailto:rotem5707@gmail.com)
+For support or inquiries, please open an issue on this repository.
 
 Join us in redefining the future of news consumption with GPT Newspaper!

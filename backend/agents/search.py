@@ -1,7 +1,12 @@
 from tavily import TavilyClient
 import os
 
-tavily_client = TavilyClient(api_key=os.getenv("TAVILY_API_KEY"))
+# Get Tavily API key from environment variables
+tavily_api_key = os.getenv("TAVILY_API_KEY")
+if not tavily_api_key:
+    raise ValueError("TAVILY_API_KEY environment variable is not set. Please check your .env file.")
+
+tavily_client = TavilyClient(api_key=tavily_api_key)
 
 
 class SearchAgent:

@@ -1,6 +1,11 @@
+import os
 from datetime import datetime
 from langchain.adapters.openai import convert_openai_messages
 from langchain_openai import ChatOpenAI
+
+# Validate OpenAI API key is available
+if not os.getenv("OPENAI_API_KEY"):
+    raise ValueError("OPENAI_API_KEY environment variable is not set. Please check your .env file.")
 
 class CritiqueAgent:
     def __init__(self):

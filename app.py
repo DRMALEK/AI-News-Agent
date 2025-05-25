@@ -4,9 +4,10 @@ from dotenv import load_dotenv
 from flask import Flask, send_from_directory
 from flask_cors import CORS
 
-from backend.server import backend_app
-
+# Load environment variables before importing backend modules
 load_dotenv()
+
+from backend.server import backend_app
 CORS(backend_app)
 
 
