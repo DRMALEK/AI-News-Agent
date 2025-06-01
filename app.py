@@ -1,3 +1,4 @@
+import os
 from multiprocessing import Process
 
 from dotenv import load_dotenv
@@ -27,9 +28,11 @@ def serve_outputs(path):
 
 
 def run_frontend():
+    debug = os.environ.get('FLASK_ENV') == 'development'
     frontend_app.run(host='0.0.0.0', port=5000)
 
 def run_backend():
+    debug = os.environ.get('FLASK_ENV') == 'development'
     backend_app.run(host='0.0.0.0', port=8000)
 
 if __name__ == '__main__':

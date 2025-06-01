@@ -54,13 +54,13 @@ class WriterAgent:
 
         }]
 
-        lc_messages = convert_openai_messages(prompt)
+        #lc_messages = convert_openai_messages(prompt)
     #     optional_params = {
     #         "response_format": {"type": "json_object"}
     #     }
         #chatbot = get_chatbot(model='gpt-4.1-mini', model_kwargs=optional_params)
         chatbot = get_chatbot(model='gpt-4.1-mini')
-        response = chatbot.invoke(lc_messages).content
+        response = chatbot.invoke(prompt).content
         return json.loads(response)
 
     def revise(self, article: dict):
@@ -79,13 +79,13 @@ class WriterAgent:
 
         }]
 
-        lc_messages = convert_openai_messages(prompt)
+        #lc_messages = convert_openai_messages(prompt)
         optional_params = {
             "response_format": {"type": "json_object"}
         }
         
         chatbot = get_chatbot(model='gpt-4.1-mini')
-        response = json.loads(chatbot.invoke(lc_messages).content)
+        response = json.loads(chatbot.invoke(prompt).content)
 
         print(f"For article: {article['title']}")
         print(f"Writer Revision Message: {response['message']}\n")

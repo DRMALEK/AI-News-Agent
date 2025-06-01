@@ -13,9 +13,19 @@ class MasterAgent:
         os.makedirs(self.output_dir, exist_ok=True)
 
     def run(self, queries: list, layout: str):
+        
         # Initialize agents
-        search_agent = SearchAgent()
+        search_agent = SearchAgent() # source counts, source filters
+        
         curator_agent = CuratorAgent()
+        
+        # scraper agenet
+
+
+        # Summariser agent (level 1, 2, 3, etc. - different levels of summarisation)
+        
+        # Writer agent (with different writing styles, e.g., news, blog, etc.)
+
         writer_agent = WriterAgent()
         #critique_agent = CritiqueAgent()
         designer_agent = DesignerAgent(self.output_dir)
@@ -26,8 +36,15 @@ class MasterAgent:
         workflow = Graph()
 
         # Add nodes for each agent
+        
+        
+        # Search agenet: This agent will search for articles based on the queries provided
         workflow.add_node("search", search_agent.run)
+        
+        # Curator agent: This agent will curate the articles found by the search agent, and return 5 most relevant articles depending on the query
         workflow.add_node("curate", curator_agent.run)
+        
+        # 
         workflow.add_node("write", writer_agent.run)
         #workflow.add_node("critique", critique_agent.run)
         workflow.add_node("design", designer_agent.run)

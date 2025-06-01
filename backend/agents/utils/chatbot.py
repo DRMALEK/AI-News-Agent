@@ -1,13 +1,14 @@
 import os
 from litellm import completion
 
+
+# Get the model name from environment variables with a default fallback
+DEFAULT_MODEL = "openai/gpt-4.1-mini'"
+MODEL_NAME = os.getenv("MODEL_NAME", DEFAULT_MODEL)
+
 # Validate OpenAI API key is available
 if not os.getenv("OPENAI_API_KEY"):
     raise ValueError("OPENAI_API_KEY environment variable is not set. Please check your .env file.")
-
-# Get the model name from environment variables with a default fallback
-DEFAULT_MODEL = "openai/gpt-4-mini"
-MODEL_NAME = os.getenv("MODEL_NAME", DEFAULT_MODEL)
 
 class Chatbot:
     def __init__(self, model=None, max_retries=1, **kwargs):
@@ -35,12 +36,14 @@ class Chatbot:
 
         # Convert Langchain message objects to dicts
         converted_messages = []
+        
         for msg in messages:
-            if hasattr(msg, 'type') and hasattr(msg, 'content'):
-                role = 'system' if msg.type == 'system' else 'user'
+            if hasattr(msg, 'role') and hasattr(msg, 'content'):
+                role = 'system' if msg.role == 'system' else 'user'
                 converted_messages.append({"role": role, "content": msg.content})
             else:
                 raise ValueError(f"Unsupported message type: {type(msg)}")
+        
         return converted_messages
 
     def invoke(self, messages):
@@ -50,10 +53,14 @@ class Chatbot:
         :return: Response object with content attribute
         """
         converted_messages = self._convert_messages(messages)
+        
+#        print("converted_messages:", converted_messages)
+        
         response = completion(
             model=self.model,
             messages=converted_messages,
             max_retries=self.max_retries,
+            response_format={ "type": "json_object" },
             **self.kwargs
         )
         
@@ -61,6 +68,10 @@ class Chatbot:
         class Response:
             def __init__(self, content):
                 self.content = content
+
+        # Return the content of the first choice in the response
+        if not response.choices or not response.choices[0].message:
+            raise ValueError("No valid response received from the model")
 
         return Response(response.choices[0].message.content)
 

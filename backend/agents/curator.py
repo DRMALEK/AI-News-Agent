@@ -2,17 +2,27 @@ import os
 from datetime import datetime
 from langchain.adapters.openai import convert_openai_messages
 from .utils.chatbot import get_chatbot
+import json
+
+urls_sample_json = """
+{
+    "urls": [
+        "https://example.com/article1",
+        "https://example.com/article2",
+        "https://example.com/article3"
+    ]
+}
+"""
 
 # Validate OpenAI API key is available
 if not os.getenv("OPENAI_API_KEY"):
     raise ValueError("OPENAI_API_KEY environment variable is not set. Please check your .env file.")
 
-
 class CuratorAgent:
     def __init__(self):
         pass
 
-    def curate_sources(self, query: str, sources: list):
+    def curate_sources(self, query: str, sources: list, max_sources: int = 5):
         """
         Curate relevant sources for a query
         :param input:
@@ -20,27 +30,40 @@ class CuratorAgent:
         """
         prompt = [{
             "role": "system",
-            "content": "You are a personal newspaper editor. Your sole purpose is to choose 5 most relevant article "
+            "content": f"You are a personal newspaper editor. Your sole purpose is to choose most relevant articles"
                        "for me to read from a list of articles.\n "
         }, {
             "role": "user",
             "content": f"Today's date is {datetime.now().strftime('%d/%m/%Y')}\n."
                        f"Topic or Query: {query}\n"
-                       f"Your task is to return the 5 most relevant articles for me to read for the provided topic or "
+                       f"Your task is to return the {str(max_sources)} most relevant articles for me to read for the provided topic or "
                        f"query\n "
                        f"Here is a list of articles:\n"
                        f"{sources}\n"
-                       f"Please return nothing but a list of the strings of the URLs in this structure: ['url1',"
-                       f"'url2','url3','url4','url5'].\n "
+                       f"Please return nothing but a JSON in the following format: {urls_sample_json}\n"
         }]
+        
+        chatbot = get_chatbot(model='openai/gpt-4.1-mini')
+        
+        response = chatbot.invoke(prompt).content
+        
+        chosen_sources = json.loads(response)["urls"]
 
-        lc_messages = convert_openai_messages(prompt)
-        chatbot = get_chatbot(model='gpt-4.1-mini')
-        response = chatbot.invoke(lc_messages).content
-        chosen_sources = response
+        #print("response:", response)
+        
+        #print("typed response:", type(response))
+
+        #print("response:", response)
+
         for i in sources:
             if i["url"] not in chosen_sources:
                 sources.remove(i)
+        
+        #print(f"Curated sources: {sources}")
+        
+        #print("length of sources:", len(sources))
+        #print("length of chosen sources:", len(chosen_sources))
+        
         return sources
 
     def run(self, article: dict):

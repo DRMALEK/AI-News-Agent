@@ -1,0 +1,10 @@
+2025-06-01 14:44:38,170 - gpt-newspaper - INFO - Starting GPT Newspaper application with log level: INFO
+2025-06-01 14:44:40,029 - gpt-newspaper - INFO - Starting backend server on port 8000
+2025-06-01 14:44:40,037 - gpt-newspaper - INFO - Starting frontend server on port 5000
+2025-06-01 14:44:54,566 - gpt-newspaper.backend_server - INFO - Received request to generate newspaper with topics: ['AI News From Google']
+2025-06-01 14:44:54,566 - gpt-newspaper.master_agent - INFO - Initialized MasterAgent with output directory: outputs/run_1748781894
+2025-06-01 14:44:55,279 - gpt-newspaper.curator_agent - INFO - Running curator agent for query: AI News From Google
+2025-06-01 14:44:55,280 - gpt-newspaper.curator_agent - INFO - Querying model for query: AI News From Google
+2025-06-01 14:44:57,151 - gpt-newspaper.curator_agent - INFO - Curated sources: 0 selected from 1
+2025-06-01 14:44:57,151 - gpt-newspaper.curator_agent - INFO - Curator agent completed
+2025-06-01 14:45:06,781 - gpt-newspaper.backend_server - INFO - Successfully generated newspaper: outputs/run_1748781894/newspaper.html
